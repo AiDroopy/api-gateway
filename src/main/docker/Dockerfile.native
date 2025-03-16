@@ -1,3 +1,13 @@
+####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in native mode
+#
+# Before building the container image run:
+# ./mvnw clean package -Dnative -Dquarkus.profile=prod
+#
+# Then, build the image with:
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/api-gateway-native .
+#
+###
 FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 WORKDIR /work/
 RUN chown 1001 /work \
