@@ -12,10 +12,10 @@ FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \
-    && chown 1001:root /work \
-    && chmod +x /work/wait-for-it.sh  # Explicit sätt körbara behörigheter
+    && chown 1001:root /work
 COPY --chown=1001:root target/*-runner /work/application
 COPY --chown=1001:root target/classes/wait-for-it.sh /work/wait-for-it.sh
+RUN chmod +x /work/wait-for-it.sh  # Flytta detta efter COPY
 EXPOSE 8081
 USER 1001
 ENTRYPOINT ["/bin/sh", "/work/wait-for-it.sh", "keycloak:8080", "--timeout=60", "--", "/work/application", "-Dquarkus.http.host=0.0.0.0", "-Dquarkus.http.port=8081"]
